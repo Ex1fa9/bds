@@ -1,6 +1,12 @@
 import tkinter as tk
 import random, time
 from PIL import Image, ImageTk, ImageSequence
+# pip install Pillow
+
+
+poshalko = False
+# True чтобы было до 1488
+# False до 99
 
 root = tk.Tk()
 
@@ -16,7 +22,8 @@ x, y = root.winfo_screenwidth()//6, root.winfo_screenheight()//4
 
 sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
 
-nums = [0, 1, 7, 14, 23, 34, 42, 47, 52, 58, 67, 69, 72, 85, 92, 99, 100, 101, 1488]
+nums = [0, 1, 7, 14, 23, 34, 42, 47, 52, 58, 67, 69, 72, 85, 92, 99]
+nums_1488 = [0, 1, 7, 14, 23, 34, 42, 47, 52, 58, 67, 69, 72, 85, 92, 99, 100, 101, 1488]
 
 #===== изоброжения =====#
 
@@ -56,7 +63,7 @@ def animate():
     root.after(50, animate)
 
 def show_easter_egg():
-    canvas.itemconfig(progress, text="1488% завершить ЧТООО???? ПОСХАЛКООООО????")
+    canvas.itemconfig(progress, text="1488% завершить")
 
     canvas.itemconfig(img1, state="normal")
     canvas.itemconfig(img2, state="normal")
@@ -67,12 +74,16 @@ def show_easter_egg():
     animate()
 
 def update(i=0):
+    if poshalko:
+        if i >= len(nums_1488):
+            return      
+
     if i >= len(nums):
         return
 
     canvas.itemconfig(progress, text=f"{nums[i]}% завершить")
 
-    if nums[i] == 1488:
+    if nums_1488[i] == 1488:
         root.after(3000, show_easter_egg)
     else:
         root.after(3000, update, i + 1)
